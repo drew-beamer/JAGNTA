@@ -16,16 +16,16 @@ export async function POST(req) {
   await loadedConnection.query("START TRANSACTION");
   await loadedConnection.query("DELETE FROM NotesIndex WHERE id = ?", [id]);
 
-  uniqueNonStopwords.forEach(
-    async (stopword) =>
-      await loadedConnection.query("INSERT IGNORE INTO NotesIndex VALUES (?, ?)", [
-        id,
-        stopword,
-      ])
-  )
+  for (const word of uniqueNonStopwords) {
+    await loadedConnection.query(
+      "INSERT IGNORE INTO NotesIndex VALUES (?, ?)",
+      [id, word]
+    );
+  }
+
   await (
     await connection
-    ).query("UPDATE Notes SET content = ? WHERE id = ?;", [content, id]);
+  ).query("UPDATE Notes SET content = ? WHERE id = ?;", [content, id]);
   await loadedConnection.query("COMMIT");
   return NextResponse.json({ message: "success" });
 }
