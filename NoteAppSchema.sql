@@ -21,5 +21,12 @@ CREATE TABLE Notes (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE NotesIndex(
+    id INT NOT NULL AUTO_INCREMENT,
+    word VARCHAR(128),
+    PRIMARY KEY (id, word),
+    FOREIGN KEY (id) REFERENCES Notes(id)
+);
+
 INSERT INTO Notes (title, content) VALUES ('Note 1', 'This is the content of note 1');
 INSERT INTO Notes (title, content) VALUES ('Note 2', 'This is the content of note 2');
