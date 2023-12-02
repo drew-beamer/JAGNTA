@@ -19,14 +19,19 @@ export default function NoteEntry({ defaultContent, id }) {
     };
   }, []);
 
+  /**
+   * @todo figure out a way to sanitize the input coming in. currently vulnerable to potential
+   * XSS attack, which is a bit out of the scope of the project for the sake of the class, but
+   * if we ever wanted to do anything with this after that is *not good* 
+  */
   return (
-    <div
+    <p
       contentEditable
       suppressContentEditableWarning
       className="w-full min-h-[18px] inline-block overflow-auto dark:bg-neutral-950 text-white outline-none border-none active:outline-none active:border-none"
       name="content"
       dangerouslySetInnerHTML={{__html: defaultContent}}
       >
-    </div>
+    </p>
   );
 }
