@@ -28,7 +28,7 @@ export default function NoteEntry({ defaultContent, id }) {
     <p
       contentEditable
       suppressContentEditableWarning
-      className="w-full min-h-[18px] inline-block overflow-auto dark:bg-neutral-950 text-white outline-none border-none active:outline-none active:border-none"
+      className="w-full min-h-[18px] inline-block overflow-auto"
       name="content"
       dangerouslySetInnerHTML={{__html: defaultContent}}
       >
