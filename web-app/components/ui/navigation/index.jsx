@@ -13,19 +13,14 @@ export default function Nav() {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">JANTA</p>
+        <Link color="foreground" href="/notes">
+          <h3 className="font-bold text-inherit m-0 p-0">JAGNTA</h3>
+        </Link>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="/notes">
-            Home
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
       <NavbarContent justify="end">
         <Input
           classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
+            base: "max-w-full sm:max-w-[12rem] h-10",
             mainWrapper: "h-full",
             input: "text-small",
             inputWrapper:
@@ -35,7 +30,13 @@ export default function Nav() {
           size="sm"
           type="search"
         />
-        <NavbarItem className="hidden lg:flex">
+      </NavbarContent>
+    </Navbar>
+  );
+}
+
+/**
+ *         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
@@ -43,7 +44,4 @@ export default function Nav() {
             Sign Up
           </Button>
         </NavbarItem>
-      </NavbarContent>
-    </Navbar>
-  );
-}
+ */
