@@ -1,10 +1,14 @@
 import ListOfNotes from "@/components/note-list";
+import CreateNote from "@/components/create-note";
 
 export default function NotesPage() {
   return (
-    <div>
-      <h1>List of Notes</h1>
+    <main className="mx-auto w-full max-w-xl mt-8">
+      <div className="flex items-center mb-8">
+        <h1 className="grow m-0 p-0">My Notes</h1>
+        <CreateNote />
+      </div>
       <ListOfNotes />
-    </div>
+    </main>
   );
 }

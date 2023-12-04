@@ -17,7 +17,7 @@ export default async function NotePage({ params }) {
   const note = await getNote(slug);
   return (
     <main className="mx-auto w-full max-w-xl mt-8">
-      <h1>NOTE {slug}</h1>
+      <h1>{note.title}</h1>
       <section>
         <Note id={slug} defaultContent={note.content} />
       </section>
