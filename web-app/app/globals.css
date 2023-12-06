@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .drop-and-fade {
-    animation: drop-and-fade 750ms linear;
+    animation: drop-and-fade 1000ms linear;
     animation-fill-mode: forwards;
     animation-delay: 0;
 }
@@ -16,9 +15,9 @@
         height: 8px;
     }
     100% {
-        transform: translateY(200px);
-        width: 120px;
-        height: 120px;
-        opacity: 0%
+        transform: translate(-50%, 200px);
+        width: 300px;
+        height: 300px;
+        opacity: 0%;
     }
 }

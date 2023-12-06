@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
+
+function randomColor() {
+   const index = Math.floor(Math.random() * 4)
+   return ["#1d4ed8", "#3730a3", "#5b21b6", "#0ea5e9"][index]
+}
 
 export default function MagicContainer({ children }) {
   const last = useRef(null);
@@ -26,8 +31,9 @@ export default function MagicContainer({ children }) {
       child.style.borderRadius = "100%";
       child.style.width = "8px";
       child.style.height = "8px";
-      child.style.backgroundColor = "purple";
+      child.style.backgroundColor = randomColor();
       child.style.position = "absolute";
+      child.style.transform = "translateX(-50%)";
       child.className = "drop-and-fade";
       child.style.zIndex = "-1";
       childRef.current?.appendChild(child);
@@ -37,7 +43,7 @@ export default function MagicContainer({ children }) {
         created: new Date(),
       };
 
-      setTimeout(() => childRef.current?.removeChild(child), 750);
+      setTimeout(() => childRef.current?.removeChild(child), 1000);
     }
   };
 
