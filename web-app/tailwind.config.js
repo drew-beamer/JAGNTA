@@ -12,6 +12,13 @@ module.exports = {
   theme: {
     extend: {},
   },
+  typography: {
+    DEFAULT: {
+      css: {
+        ul: false,
+      }
+    }
+  },
   darkMode: "class",
   plugins: [
     require("@tailwindcss/typography"),
