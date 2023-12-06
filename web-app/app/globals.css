@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .drop-and-fade {
-    animation: drop-and-fade 750ms 1 ease;
+    animation: drop-and-fade 1000ms linear;
     animation-fill-mode: forwards;
+    animation-delay: 0;
 }
 
 @keyframes drop-and-fade {
     0% {
         opacity: 100%;
+        width: 8px;
+        height: 8px;
     }
     100% {
-        transform: translateY(200px);
-        opacity: 0%
+        transform: translate(-50%, 200px);
+        width: 300px;
+        height: 300px;
+        opacity: 0%;
     }
 }
