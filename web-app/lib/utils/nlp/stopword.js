@@ -182,12 +182,23 @@ wouldn't
 `.split("\n")
 );
 
+function removeBRTag(inputString) {
+  return inputString.replace(/\<br\>/g, " ");
+}
+
 /**
  * @param {string} inputString string to parse
  * @returns {Set<string>} set of non-stopwords contained in the string, also filtered for length for DB purposes
  */
 export function getUniqueNonStopwords(inputString) {
-    const split = inputString.split(" ");
-    const filtered = split.filter((word) => !stopwords.has(word) && word.length < 128);
-    return new Set(filtered)
+  const brRemoved = removeBRTag(inputString);
+  const split = brRemoved.split(" ").map((item, index) => ({
+    word: item.replace(/\W/g, ""),
+    index,
+  }));
+  const filtered = split.filter(
+    ({ word }) => !stopwords.has(word) && word.length < 128
+  );
+  console.log(filtered)
+  return filtered;
 }

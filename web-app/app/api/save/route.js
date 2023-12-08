@@ -16,7 +16,7 @@ export async function POST(req) {
   await loadedConnection.query("START TRANSACTION");
   await loadedConnection.query("DELETE FROM NotesIndex WHERE id = ?", [id]);
 
-  for (const word of uniqueNonStopwords) {
+  for (const {word, index} of uniqueNonStopwords) {
     await loadedConnection.query(
       "INSERT IGNORE INTO NotesIndex VALUES (?, ?)",
       [id, word]
