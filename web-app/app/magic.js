@@ -54,7 +54,7 @@ export default function MagicContainer({ children }) {
       className="w-full flex flex-col grow p-24">
       <div
         ref={childRef}
-        className="absolute top-0 left-0 h-full w-full z-[-1]"></div>
+        className="absolute top-0 left-0 overflow-clip max-h-screen h-full w-full z-[-1]"></div>
       {children}
     </div>
   );
