@@ -1,0 +1,73 @@
+A systems/scientific approach to databases
+
+- Learn SQL, web programming/full-stack
+- Web programming is mostly independent in order to maintain science/systems-focused content
+
+Database management systems:
+
+- data storage and manipulation
+- redundancy control
+- consistency control
+
+Humans make mistakes all the time—we use computers to limit our ability to mess up
+
+Dumping data in a file does not give us what we want in terms of consistency control
+
+- ex: student name and id, both mandatory, what if we forgot to put one?
+
+Starting sqlite3:
+
+```bash
+sqlite3 [name].db
+```
+
+## Creating a table
+
+```sql
+CREATE TABLE [name] ( field type, ... );
+
+--ex:
+CREATE TABLE Major ( idStudent INT, name VARCHAR(45) );
+```
+
+## Inserting
+
+```sql
+INSERT INTO Major VALUES (1, 'Data Science');
+```
+
+“This is just like weird Excel”
+
+- But wait, it has type control
+- Econ bros in shambles
+- Lets us make higher and higher complexity applications, and it’s consistent
+
+## Looking up Data
+
+```sql
+SELECT * FROM Major;
+
+/* In example returns:
+1|Data Science
+1|Mathematics
+2|History
+3|History
+4|Chemistry
+5|Physics
+5|Spanish
+6|Political Science
+*/
+```
+
+Doesn’t look good but the data is there. Now run `.quit`. Restart db. The data persists!
+
+### To get just a field
+
+```sql
+SELECT name FROM Major;
+SELECT idStudent FROM Major;
+
+--or to get just the distinct values
+SELECT DISTINCT name FROM Major;
+SELECT DISTINCT idStudent FROM Major;
+```

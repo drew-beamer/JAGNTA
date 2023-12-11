@@ -1,0 +1,79 @@
+Database is essentially just a binary tree with indexes as the values
+
+- Preorder traversal can get all indices in ascending order
+
+Need to indicate index
+
+# Entity-Relationship
+
+It’s time for some ~~system design~~
+
+## Schema
+
+| instructor |
+| --- |
+| ID |
+| name |
+| salary |
+
+| student |
+| --- |
+| ID |
+| name |
+| major |
+- These are some example schema
+
+## Relation
+
+In the case of the student schema above:
+
+| primary (ID) | name | major |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+
+## Relationships:
+
+Ex: advising relationships between instructors and student
+
+- Depends on the client!
+- When diagramming, indicate relationships with an arrow.
+    - Arrow going from student to instructor: “each student has at most one instructor
+        - One-to-many relationship from instructor to student
+    - Other way around: each instructor has at most one students (probably not what we want)
+        - Many-to-one
+    - Many-to-many: instructor can have 0+ students as advisees and students can have 0+ instructors as advisors (line with no arrows)
+        - Total: indicated with bolder line, in our example indicates every student must have ********at least******** one advisor
+        - Partial for instructor: having no advisees is okay
+        - If we instead put an arrow from student —> instructor, we’d be saying every student has exactly one advisor
+    - We can add attributes to relationships—such as date advisor started working with the student
+- We can go from our Entity-Relationship model to drawing it out with the data, connect via just drawing lines
+
+Updating our student relation:
+
+| primary (ID) | name | major | foreign key (instr_id) |
+| --- | --- | --- | --- |
+|  |  |  |  |
+|  |  |  |  |
+- Note that this is NOT shown in the student table in the ER diagram
+
+We want multiple students to be able to have multiple instructors
+
+- “Broken relationship”
+- We should create a new relationship to do this:
+
+| instr_id | stud_id |
+| --- | --- |
+|  |  |
+|  |  |
+- Lets both ids appear multiple times
+- If someone changed their name, they would only need to do it in the respective table
+- Lets add the date in which the relationship was formed—can just add a column
+
+| instr_id | stud_id | date |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+A ***********weak entity*********** does not have enough attributes to form a primary key

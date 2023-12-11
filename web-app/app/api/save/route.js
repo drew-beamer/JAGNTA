@@ -13,19 +13,18 @@ export async function POST(req) {
 
   const loadedConnection = await connection;
 
-  await loadedConnection.query("START TRANSACTION");
+  await loadedConnection.beginTransaction();
   await loadedConnection.query("DELETE FROM NotesIndex WHERE id = ?", [id]);
 
-  for (const {word, index} of uniqueNonStopwords) {
+  for (const { word, index } of uniqueNonStopwords) {
     await loadedConnection.query(
-      "INSERT IGNORE INTO NotesIndex VALUES (?, ?)",
-      [id, word]
+      "INSERT IGNORE INTO NotesIndex VALUES (?, ?, ?)",
+      [id, word, index]
     );
   }
-
   await (
     await connection
   ).query("UPDATE Notes SET content = ? WHERE id = ?;", [content, id]);
-  await loadedConnection.query("COMMIT");
+  await loadedConnection.commit();
   return NextResponse.json({ message: "success" });
 }

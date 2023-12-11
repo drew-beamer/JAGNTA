@@ -16,9 +16,13 @@ export default function AdvancedSearchWrapper() {
     e.preventDefault();
     console.log(e);
     const formData = new FormData(e.target);
+    let url = "/api/search?"
     for (var [key, value] of formData.entries()) { 
-      console.log(key, value);
+      url += `${key}=${value}&`
     }
+    url = url.slice(0, url.length - 1);
+    console.log(url)
+    fetch(url).then((res) => console.log(res))
   }
 
   return (

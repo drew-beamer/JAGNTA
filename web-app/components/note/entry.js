@@ -26,7 +26,7 @@ export default function NoteEntry({ defaultContent, id }) {
   */
   return (
     <p
-      contentEditable
+      contentEditable="plaintext-only"
       suppressContentEditableWarning
       className="w-full min-h-[18px] inline-block overflow-auto outline-none border-none"
       name="content"
