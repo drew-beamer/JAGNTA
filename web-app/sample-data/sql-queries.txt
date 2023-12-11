@@ -1,0 +1,97 @@
+Selecting a field that contains a substring:
+
+- We can also do this with Regex in MySQL but that’s disgusting
+
+```sql
+SELECT title FROM course WHERE title LIKE '%INTRO%';
+```
+
+We can make all our results lowercase—there’s a whole bunch of functions like this that can be found on the MySQL docs:
+
+- LOWER isn’t affecting the projection, it’s just making everything lowercase
+
+```sql
+SELECT LOWER(semester) FROM teaches;
+```
+
+********************Exercise:******************** find all the courses that have intro in them and append yay to the title
+
+```sql
+SELECT title||'yay' FROM course WHERE title LIKE '%INTRO%';
+```
+
+# Ordering
+
+More for presentation rather than a formal operation
+
+- Useful for webpages, where we might want to order orders by date
+- Helps remove strain from client
+
+```sql
+SELECT name FROM student ORDER BY name;
+```
+
+Can use `DESC` or `ASC` to specify descending or ascending
+
+# Renaming
+
+What if we wanted to select buildings where more than one instructor teaches?
+
+```sql
+SELECT DISTINCT building FROM instructor,department
+WHERE instructor.dept_name = department.dept_name;
+```
+
+We can also rename the tables to make our life easier:
+
+```sql
+SELECT DISTINCT building FROM instructor as I,department as D
+WHERE I.dept_name = D.dept_name;
+```
+
+### Relational Algebra
+
+We denote renaming with $\rho$, ex use:
+
+$$
+\sigma_{J.dept\_name='Physics' \&I.sal > J.sal} (\rho_{Instructor}(I) \times \rho_{Instructor}(J))
+$$
+
+This builds the following query:
+
+```sql
+SELECT DISTINCT J.name 
+FROM instructor as I, instructor as J 
+WHERE J.dept_name = 'Physics' AND 
+	I.salary > J.salary;
+```
+
+### Exercise
+
+Find the salary of all instructors that make more than a Computer Scientist, ordered by name.
+
+```sql
+SELECT DISTINCT J.name 
+FROM instructor as I, instructor as J 
+WHERE J.dept_name = 'Comp. Sci.' AND 
+	I.salary > J.salary
+ORDER BY I.name;
+```
+
+# Set Operations
+
+**********Union:********** get all classes that ran in Fall 2009 or Spring 2010
+
+```sql
+SELECT course_id FROM section WHERE semester = 'Fall' AND year = 2009
+UNION ALL
+SELECT course_id FROM section WHERE semester = 'Spring' AND year = 2010;
+```
+
+Intersect**********:********** get all classes that ran in Fall 2009 or Spring 2010
+
+```sql
+SELECT course_id FROM section WHERE semester = 'Fall' AND year = 2009
+INTERSECT
+SELECT course_id FROM section WHERE semester = 'Spring' AND year = 2010;
+```
