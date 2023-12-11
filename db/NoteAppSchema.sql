@@ -23,8 +23,9 @@ CREATE TABLE Notes (
 
 CREATE TABLE NotesIndex(
     id INT NOT NULL AUTO_INCREMENT,
-    word VARCHAR(128),
-    PRIMARY KEY (id, word),
+    word VARCHAR(128) NOT NULL,
+    wordIndex INT NOT NULL,
+    PRIMARY KEY (id, word, wordIndex),
     FOREIGN KEY (id) REFERENCES Notes(id)
 );
 
