@@ -1,0 +1,26 @@
+# B+-Tree
+
+Internal and leaf nodes fit within memory, which we want.
+
+- Binary search can be done within memory
+
+Pointer from one leaf node to the next sequentially
+
+- Note primary key is an ID
+- Secondary index is the name
+- “Find each item sequentially in the database”
+
+## Queries on B+ Trees
+
+---
+
+Find record with search-key value *V*.
+
+1. ********C = root********
+2. while *C* is not a leaf node
+    1. i = least value such that V ≤ Ki
+    2. if no such value i exists, set C = last non-null pointer in C
+    3. else (V = Ki) ? C = Pi+1, otherwise C= Pi
+3. i = least value Ki = V
+4. If i exists, follow pointer Pi to desired record
+5. Otherwise no record with search-key value *k* exists

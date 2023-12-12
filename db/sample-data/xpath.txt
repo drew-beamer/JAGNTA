@@ -1,0 +1,35 @@
+Data isn’t clean—it doesn’t come in a database. We need to extract and parse.
+
+# XML Structure
+
+```jsx
+<! Preamble >
+<?xml version="1.0" encoding="UTF-8" ?>
+<bookstore>
+	<book category="cooking">
+		<title lang="en">Everyday Italian</title>
+		<author>Giada De Laurentiis</author>
+		<year>2005</year>
+		<price>30.00</price>
+	</book>
+	<book category="children">
+		<title lang="en">Harry Potter</title>
+		<author>J K. Rowling</author>
+		<year>2005</year>
+		<price>29.99</price>
+	</book>
+</bookstore>
+```
+
+Given a large XML file, we can query using *****XPath*****
+
+- Google Sheets has built in support
+- `IMPORTXML([cell], [XPath Query])`
+
+# Bookstore
+
+`/bookstore/book/title` - get any title below bookstore
+
+`//title` - any descendant
+
+`/*/*/title` - any title 2 levels down
