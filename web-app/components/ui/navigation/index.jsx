@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar,
   NavbarBrand,
@@ -7,9 +9,16 @@ import {
   Button,
   Input,
 } from "@nextui-org/react";
+import { useState } from "react";
 import React from "react";
 
 export default function Nav() {
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+
+  const handleSearchFocus = () => {
+    setShowAdvancedSearch(true);
+  };
+
   return (
     <Navbar>
       <NavbarBrand>
@@ -29,7 +38,13 @@ export default function Nav() {
           placeholder="Type to search..."
           size="sm"
           type="search"
+          onFocus={handleSearchFocus}
         />
+        {showAdvancedSearch && (
+          <Button as={Link} href="/advanced-search">
+            Advanced Search
+          </Button>
+        )}
       </NavbarContent>
     </Navbar>
   );
