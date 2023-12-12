@@ -12,18 +12,22 @@ export default function AdvancedSearchWrapper() {
     setEntries((e) => e + 1);
   };
 
+  const handleEntryRemoved = () => {
+    setEntries((e) => e - 1);
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(e);
     const formData = new FormData(e.target);
-    let url = "/api/search?"
-    for (var [key, value] of formData.entries()) { 
-      url += `${key}=${value}&`
+    let url = "/api/search?";
+    for (var [key, value] of formData.entries()) {
+      url += `${key}=${value}&`;
     }
     url = url.slice(0, url.length - 1);
-    console.log(url)
-    fetch(url).then((res) => console.log(res))
-  }
+    console.log(url);
+    fetch(url).then((res) => console.log(res));
+  };
 
   return (
     <form className="flex space-y-4 flex-wrap" onSubmit={handleFormSubmit}>
@@ -37,7 +41,12 @@ export default function AdvancedSearchWrapper() {
         <Button variant="outlined" onClick={handleEntryExpansion}>
           Add Entry
         </Button>
-        <Button variant="shadow" type="submit">Search</Button>
+        <Button variant="outlined" onClick={handleEntryRemoved}>
+          Remove Entry
+        </Button>
+        <Button variant="shadow" type="submit">
+          Search
+        </Button>
       </div>
     </form>
   );
