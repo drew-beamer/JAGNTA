@@ -12,3 +12,6 @@ export default function NotesPage() {
     </main>
   );
 }
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
