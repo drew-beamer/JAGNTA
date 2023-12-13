@@ -3,17 +3,24 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import AdvancedSearchEntries from "./advanced-search-entries";
-import AdvancedSearchEntry from "./advanced-search-entry";
+import AdvancedSearchResults from "./advanced-search-results";
 
+/**
+ * Responsible for managing state of the form and search results
+ * 
+ * @returns {import("react").ReactElement}
+ */
 export default function AdvancedSearchWrapper() {
   const [entries, setEntries] = useState(1);
+  const [results, setResults] = useState(null);
 
   const handleEntryExpansion = () => {
     setEntries((e) => e + 1);
   };
 
   const handleEntryRemoved = () => {
-    setEntries((e) => e - 1);
+    // Don't let entries go lower than 0
+    setEntries((e) => Math.max(0, e - 1));
   };
 
   const handleFormSubmit = (e) => {
@@ -21,22 +28,21 @@ export default function AdvancedSearchWrapper() {
     console.log(e);
     const formData = new FormData(e.target);
     let url = "/api/search?";
+    // Add search params to the URL
     for (var [key, value] of formData.entries()) {
       url += `${key}=${value}&`;
     }
+    // Remove trailing ampersand
     url = url.slice(0, url.length - 1);
-    console.log(url);
-    fetch(url).then((res) => console.log(res));
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => setResults(json));
   };
 
   return (
     <form className="flex space-y-4 flex-wrap" onSubmit={handleFormSubmit}>
       <Input name="main" label="Search" className="w-full" />
-      {Array(entries)
-        .fill(0)
-        .map((_, index) => (
-          <AdvancedSearchEntry key={`entry${index}`} name={`entry${index}`} />
-        ))}
+      <AdvancedSearchEntries entries={entries} />
       <div className="space-x-4">
         <Button variant="outlined" onClick={handleEntryExpansion}>
           Add Entry
@@ -48,6 +54,8 @@ export default function AdvancedSearchWrapper() {
           Search
         </Button>
       </div>
+      {/* Only show result section if search has been run and we have results */}
+      {results && results.length > 0 && <AdvancedSearchResults results={results} />}
     </form>
   );
 }

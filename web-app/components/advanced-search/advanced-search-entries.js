@@ -9,14 +9,10 @@ import "./typedefs";
  * @param {Array<Entry>} props.entries
  * @returns
  */
-
 export default function AdvancedSearchEntries({ entries }) {
-  console.log(entries)
-  return (
-    <>
-      {entries?.map((entry, index) => (
-        <AdvancedSearchEntry key={index} entry={entry} />
-      ))}
-    </>
-  );
+  return Array(entries)
+    .fill(0)
+    .map((_, index) => (
+      <AdvancedSearchEntry key={`entry${index}`} name={`entry${index}`} />
+  ));
 }

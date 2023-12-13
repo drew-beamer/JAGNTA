@@ -8,7 +8,7 @@ function expandQuery(currentQuery, operation) {
 }
 
 function joinQuery(filteredNoteTableQuery) {
-  return `SELECT id, title, content FROM Notes JOIN (SELECT id, count(id) as main_count FROM NotesIndex WHERE id IN ${filteredNoteTableQuery} AND word = ? GROUP BY id) as doc_counts USING(id) ORDER BY main_count DESC`;
+  return `SELECT id, word, title, content, main_count FROM Notes JOIN (SELECT id, word, count(id) as main_count FROM NotesIndex WHERE id IN ${filteredNoteTableQuery} AND word = ? GROUP BY id) as doc_counts USING(id) ORDER BY main_count DESC`;
 }
 
 /**

@@ -40,7 +40,7 @@ for (let fileIndex in files) {
   ]);
 
   // Gets last inserted ID
-  const id = await connection.query("SELECT LAST_INSERT_ID()")[0];
+  const id = (await connection.query("SELECT LAST_INSERT_ID()"))[0][0]["LAST_INSERT_ID()"];
 
   // Add each word to the "index"
   for (const { word, index } of uniqueNonStopwords) {
@@ -50,6 +50,7 @@ for (let fileIndex in files) {
       index,
     ]);
   }
+  console.log("insert successful")
 
   await connection.commit();
 }

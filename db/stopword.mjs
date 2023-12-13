@@ -192,14 +192,13 @@ const stopwords = new Set(
    */
   export function getUniqueNonStopwords(inputString) {
     const brRemoved = removeBRTag(inputString);
-    const split = brRemoved.split(" ").map((item, index) => ({
+    const split = brRemoved.split(/\s+/).map((item, index) => ({
       word: item.replace(/\W/g, " ").trim(),
       index,
     }));
     const filtered = split.filter(
-      ({ word }) => !stopwords.has(word) && word.length < 128
+      ({ word }) => !stopwords.has(word) && word.length > 0 && word.length < 128
     );
-    console.log(filtered)
     return filtered;
   }
   
