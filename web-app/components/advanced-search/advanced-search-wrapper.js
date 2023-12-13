@@ -43,7 +43,7 @@ export default function AdvancedSearchWrapper() {
     <form className="flex space-y-4 flex-wrap" onSubmit={handleFormSubmit}>
       <Input name="main" label="Search" className="w-full" />
       <AdvancedSearchEntries entries={entries} />
-      <div className="space-x-4">
+      <div className="space-x-4 flex w-full">
         <Button variant="outlined" onClick={handleEntryExpansion}>
           Add Entry
         </Button>
