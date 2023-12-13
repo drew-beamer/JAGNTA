@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
+import { getUniqueNonStopwords } from "@/lib/utils/nlp/stopword";
 
 export default function NoteEntry({ defaultContent, id }) {
   useEffect(() => {
     const inputListener = addEventListener("input", (event) => {
       if (event.target.id === "note-entry") {
+        const uniqueNonStopwords = getUniqueNonStopwords(event.target.innerHTML);
+
         fetch("/api/save", {
           method: "POST",
           body: JSON.stringify({
             content: event.target.innerHTML,
+            uniqueNonStopwords,
             id,
           }),
         });

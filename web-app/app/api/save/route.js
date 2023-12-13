@@ -7,11 +7,10 @@ import { NextRequest, NextResponse } from "next/server";
  * @param { NextRequest } req
  */
 export async function POST(req) {
-  const { title, content, id } = await req.json();
+  const { title, content, id, uniqueNonStopwords } = await req.json();
   const loadedConnection = await connection;
 
   if (content) {
-    const uniqueNonStopwords = getUniqueNonStopwords(content);
   
     await loadedConnection.beginTransaction();
     await loadedConnection.query("DELETE FROM NotesIndex WHERE id = ?", [id]);
