@@ -21,9 +21,7 @@ export async function POST(req) {
         [id, word, index]
       );
     }
-    await (
-      await connection
-    ).query("UPDATE Notes SET content = ? WHERE id = ?;", [content, id]);
+    await loadedConnection.query("UPDATE Notes SET content = ?,updated_at = ? WHERE id = ?;", [content, new Date(), id]);
     await loadedConnection.commit();
   } else if (title) {
     await loadedConnection.beginTransaction();

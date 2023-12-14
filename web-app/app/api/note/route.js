@@ -23,3 +23,18 @@ export async function POST() {
     id: id[0][0]["LAST_INSERT_ID()"],
   });
 }
+
+/**
+ * 
+ * @param {NextRequest} req 
+ */
+export async function DELETE(req) {
+  const { id } = await req.json();
+
+  const loadedConnection = await connection;
+  await loadedConnection.beginTransaction();
+  await loadedConnection.query("DELETE FROM Notes WHERE id = ?", [id]);
+  await loadedConnection.commit();
+
+  return NextResponse.json({message: "success"});
+}

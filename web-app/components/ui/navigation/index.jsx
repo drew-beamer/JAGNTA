@@ -11,12 +11,22 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function Nav() {
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
+  const router = useRouter();
+
   const handleSearchFocus = () => {
     setShowAdvancedSearch(true);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const query = formData.get("search");
+    router.push("/search-results?search=" + query, {});
   };
 
   return (
@@ -27,19 +37,22 @@ export default function Nav() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[12rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          type="search"
-          onFocus={handleSearchFocus}
-        />
+        <form onSubmit={handleSubmit}>
+          <Input
+            classNames={{
+              base: "max-w-full sm:max-w-[12rem] h-10",
+              mainWrapper: "h-full",
+              input: "text-small",
+              inputWrapper:
+                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+            }}
+            name="search"
+            placeholder="Type to search..."
+            size="sm"
+            type="search"
+            onFocus={handleSearchFocus}
+          />
+        </form>
         {showAdvancedSearch && (
           <Button as={Link} href="/advanced-search">
             Advanced Search

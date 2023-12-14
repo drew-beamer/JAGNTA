@@ -6,7 +6,7 @@ export default function CreateNote() {
   const router = useRouter();
 
   const handleClickEvent = async () => {
-    fetch("/api/create-note", { method: "POST" }).then(async (res) => {
+    fetch("/api/note", { method: "POST" }).then(async (res) => {
       const { message, id } = await res.json();
       if (message === "success") {
         router.push(`/note/${id}`);
