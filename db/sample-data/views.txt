@@ -1,0 +1,53 @@
+If we wanted to give professors making below the average salary the average salary, and anyone making above a 2% raise:
+
+```sql
+UPDATE instructor, (SELECT AVG(salary) FROM instructor) as A
+	SET salary = CASE 
+		WHEN salary < avg_sal THEN avg_sal
+		else salary * 1.02
+	END
+```
+
+- Note: we can have a conditional in the set operation, needs to be denoted `CASE`
+    - `WHEN` essentially is an if statement
+
+# Views
+
+We can create a view by doing the following:
+
+```sql
+CREATE VIEW avg_sal AS
+	SELECT dept_name, AVG(salary) AS salary FROM instructor
+	GROUP BY dept_name;
+```
+
+Accessing the view can then be done by:
+
+```sql
+SELECT * FROM avg_sal;
+```
+
+Suppose we have a hypothetical where we have two users, Alice and Bob. Alice would like to pay Bob 300 dollars. Our database performs the withdraw for Alice, and then power goes out. There’s no record of this transaction, so Bob never gets the money and Alice is out $300.
+
+- ********************Solution:******************** atomic transactions
+
+```sql
+START TRANSACTION
+
+UPDATE instructor 
+	SET SALARY = salary  - 1000;
+WHERE name = 'Wu';
+
+UPDATE instructor
+	SET salary = salary + 1000;
+WHERE name = 'Kim';
+
+COMMIT;
+```
+
+- This takes 1000 from Wu and gives it to Kim
+- Creates a kind of replicate of the database that maintains whats happening. Nothing applied to our true database until `COMMIT` is run
+
+# Integrity Constraints
+
+There’s a lot we can do to verify our data is valid.

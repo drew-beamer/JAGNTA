@@ -1,0 +1,102 @@
+General steps:
+
+1. Parsing and translation
+2. Optimization
+3. Evaluation
+
+We only care about the number of disk accesses here for big O, at least when it comes to DBS
+
+The database handles picking the algorithm based on metrics such as existing indices.
+
+## Selection Operation
+
+---
+
+### Algorithm A1 (linear search)
+
+- Scan each file block and test all records to see if they satisfy the selection condition
+- Cost estimate = $b_r$ transfers + 1 seed, where $b_r$ denotes the number of blocks containing records from relation $r$
+- If selection is on a key attribute, can stop on finding record
+    - $cost = (b_r/2)$ block transfers + 1 seek
+- Linear search can be applied regardless of
+    - Selection conditions
+    - Order of records in the file
+    - Availability of indices
+
+### Index Scan - Search using an Index
+
+- Seelction condition must be on search-key of index
+- Let $h_i$ be the number of queries in the index
+
+### A2 (Primary Index, Equality on Key)
+
+- Retrieve a single record that satisfies the corresponding equality condition
+- $cost = (h_i + 1) * (t_T * t_S)$
+    - $h_i$ : index requires a certain number of queries to load itself on demand, small in a B+ tree
+        - +1 since it’s the query for the data at the end of the index (single record, so +1)
+    - $t_T$: transfer time
+    - $t_S$: seek time
+
+### A3 (Primary Index, Equality on Nonkey)
+
+- Retrieve multiple records
+- Records will be on consecutive blocks
+- $b$: number of blocks containing matching records
+- $cost = h_i * (t_T + t_S) + t_S + t_T * b$
+
+### A4 (Secondary Index, Equality on Nonkey)
+
+- Retrieve a single record if the search-key is a candidate key
+    - $cost = (h_i+1) * (t_T + t_S)$
+- Retrieve multiple records if the search-key  is not a candidate key
+    - Each of the *m* matching records may be on a different block
+    - $cost =(h_i+m) *(t_T + t_S)$
+        - Can be very expensive
+
+## Selections Involving Comparisons
+
+---
+
+### A5 (Primary Index, Comparison), Relation sorted on A
+
+- For $\sigma_{A \geq V}(r)$ use the index to find the first tuple ≥ v and scan the relation sequentially from there
+- For $\sigma_{A \leq V}(R)$ just scan relation sequentially till first tuple $>$ v; do not use the index
+
+### A6 (Secondary Index, Comparison)
+
+- For $\sigma_{A \geq V}(r)$, use the index to find first index entry ≥ v and scan index sequentially from here
+- For $\sigma_{A \leq V}(r)$ just scan leaf pages of the index finding pointers to records till first entry > $v$
+- Both cases require retrieved records being pointed
+    - Require an I/O for each record
+
+## Implementing Complex Selections
+
+---
+
+********Conjunction: $\sigma_{\theta 1} \wedge \sigma_{\theta 2} \wedge ... \sigma_{\theta n}(r)$**
+
+### Disjunction
+
+**************************Disjunction: $\sigma_{\theta 1} \vee \sigma_{\theta 2} \vee ... \sigma_{\theta n}(r)$**
+
+- ********************************A10 (disjunctive selection by union of identifiers)********************************
+    - Applicable if all conditions have available indices
+        - Otherwise just linear scan
+    - Use corresponding index for each condition and take union of all obtained sets of record pointers
+    - Fetch records from the file
+
+## Sorting
+
+---
+
+Suppose we have enough memory for three blocks, and we have a file that has well more than three blocks
+
+- How do we sort this?
+- Modified merge sort
+- Only need 2 blocks in memory!
+- We can minimize by increasing the amount of space in memory
+
+1. Take 2, bring them to memory, sort them
+2. Generate a new file in the disk containing them
+3. Repeat this until all pairings are sorted
+4. Execute merge sort from here on out
