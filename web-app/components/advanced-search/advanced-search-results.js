@@ -11,11 +11,11 @@ import Link from "next/link";
  */
 function AdvancedSearchResult({ result }) {
   return (
-    <div className="mb-4" key={`note-${result.id}`}>
+    <div className="mb-4" key={`note-${result.note_id}`}>
       <Link
         className="no-underline hover:underline text-sky-500"
         target="_blank"
-        href={`/note/${result.id}`}>
+        href={`/note/${result.note_id}`}>
         <h3 className="p-0 m-0 ">{result.title}</h3>
       </Link>
       <p className="p-0 m-0">{result.content.slice(0, 100).trim()}...</p>

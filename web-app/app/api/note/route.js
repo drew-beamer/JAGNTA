@@ -33,7 +33,7 @@ export async function DELETE(req) {
 
   const loadedConnection = await connection;
   await loadedConnection.beginTransaction();
-  await loadedConnection.query("DELETE FROM Notes WHERE id = ?", [id]);
+  await loadedConnection.query("DELETE FROM Notes WHERE note_id = ?", [id]);
   await loadedConnection.commit();
 
   return NextResponse.json({message: "success"});

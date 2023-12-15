@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   const notes = await getNotes();
 
   const routes = notes.map((note) => ({
-    slug: note.id,
+    slug: note.note_id,
   }));
 
   return routes;

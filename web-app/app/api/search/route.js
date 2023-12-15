@@ -4,11 +4,11 @@ import connection from "@/lib/db";
 function expandQuery(currentQuery, operation) {
   return `(${currentQuery} ${
     operation === "OR" ? "UNION" : operation === "AND" ? "INTERSECT" : "EXCEPT"
-  } SELECT id FROM NotesIndex WHERE word = ?)`;
+  } SELECT note_id FROM Occurences WHERE word = ?)`;
 }
 
 function joinQuery(filteredNoteTableQuery) {
-  return `SELECT id, word, title, content, main_count FROM Notes JOIN (SELECT id, word, count(id) as main_count FROM NotesIndex WHERE id IN ${filteredNoteTableQuery} AND word = ? GROUP BY id) as doc_counts USING(id) ORDER BY main_count DESC`;
+  return `SELECT note_id, word, title, content, main_count FROM Notes JOIN (SELECT note_id, word, count(note_id) as main_count FROM Occurences WHERE note_id IN ${filteredNoteTableQuery} AND word = ? GROUP BY note_id) as doc_counts USING(note_id) ORDER BY main_count DESC`;
 }
 
 /**
@@ -31,7 +31,7 @@ export async function GET(req) {
     */
   const main = params.get("main");
   const loadedConnection = await connection;
-  const baseQuery = `(SELECT id FROM NotesIndex WHERE word = ?)`;
+  const baseQuery = `(SELECT note_id FROM Occurences WHERE word = ?)`;
   const queryParams = [main];
   let currentQuery = baseQuery;
   for (let i = 0; i < Math.floor(paramArray.length / 2); i++) {

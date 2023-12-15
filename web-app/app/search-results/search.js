@@ -15,6 +15,8 @@ export default function SearchResults() {
       .then((json) => setResults(json));
   }, [params]);
 
+  console.log(results)
+
   return results ? (
     <AdvancedSearchResults results={results} />
   ) : (

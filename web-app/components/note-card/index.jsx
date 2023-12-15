@@ -12,7 +12,7 @@ export default function NoteCard({ note }) {
   const handleDelete = async () => {
     await fetch("/api/note", {
       method: "DELETE",
-      body: JSON.stringify({ id: note.id }),
+      body: JSON.stringify({ id: note.note_id }),
     }).then(() => router.refresh());
   };
 
@@ -23,7 +23,7 @@ export default function NoteCard({ note }) {
           <Link
             className="no-underline hover:underline grow w-full"
             target="_blank"
-            href={`/note/${note.id}`}>
+            href={`/note/${note.note_id}`}>
             <h4 className="m-0 p-0 leading-tight">{note.title}</h4>
           </Link>
           <Button onClick={handleDelete} className="py-[0.125rem] ml-2">
