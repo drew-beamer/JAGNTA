@@ -24,7 +24,8 @@ Before you begin, ensure you have the following installed:
    ```bash
    git clone https://github.com/drew-beamer/JAGNTA.git
    cd JAGNTA
-  ```
+   ```
+  
 2. **Ensure MySQL is Installed**
 
    Make sure you have **MySQL** installed and running on your machine. If not, download it from the [official MySQL website](https://dev.mysql.com/downloads/) and follow the installation instructions.
