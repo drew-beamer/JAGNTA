@@ -23,7 +23,8 @@ Before you begin, ensure you have the following installed:
 
    ```bash
    git clone https://github.com/drew-beamer/JAGNTA.git
-   cd JAGNTA```
+   cd JAGNTA
+   ```
   
 2. **Ensure MySQL is Installed**
 
